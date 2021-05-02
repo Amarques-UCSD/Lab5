@@ -4,24 +4,24 @@ const img = new Image(); // used to load image from <input> and draw to canvas
 
 const canvas = document.getElementById("myCanvas");
 const context = canvas.getContext('2d');
+
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
   // TODO
-  alert("Loaded");
   const dim = getDimmensions(canvas.width, canvas.height, img.width, img.height);
   // Some helpful tips:
   // - Fill the whole Canvas with black first to add borders on non-square images, then draw on top
   context.fillRect(0, 0, canvas.width, canvas.height);
   // - Clear the form when a new image is selected
   // - If you draw the image to canvas here, it will update as soon as a new image is selected
-  context.drawImage(img, dim.startX, dim.startY);
+  context.drawImage(img, dim.startX, dim.startY, dim.width, dim.height);
 });
 
 
 canvas.getElementById("image-input").addEventListener('change', function() {
 //function updateImg() {
   alert("Uploaded");
-  img.src = document.getElementById("image-input").value;  // idk what is the path
+  img.src = URL.createObjectURL(this.files[0]);
   img.alt = '`${img.src}`';
 });
 
