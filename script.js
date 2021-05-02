@@ -2,26 +2,35 @@
 
 const img = new Image(); // used to load image from <input> and draw to canvas
 
-input.addEventListener('input', updateImg);
-
-document.getElementById("user-image").addEventListener('click', updateImg());
-function updateImg() {
-  img.src = 'new_image.png';
-  img.alt = '`${img.src}`';
-}
-
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
   // TODO
+  alert("Loaded");
   const context = canvas.getContext('2d');
   const dim = getDimmensions(canvas.width, canvas.height, img.width, img.height);
   // Some helpful tips:
   // - Fill the whole Canvas with black first to add borders on non-square images, then draw on top
-  //context.clearRect(0, 0, canvas.width, canvas.height);
+  context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillRect(0, 0, canvas.width, canvas.height);
   // - Clear the form when a new image is selected
   // - If you draw the image to canvas here, it will update as soon as a new image is selected
   context.drawImage(img, dim.startX, dim.startY);
+});
+
+
+document.getElementById("user-image").addEventListener('change', function() {
+//function updateImg() {
+  alert("Uploaded");
+  img.src = 'new_image.png';  // idk what is the path
+  img.alt = '`${img.src}`';
+});
+
+
+document.getElementById("generate-meme").addEventListener('submit', function() {
+//function generateMeme() {
+  alert("Generating");
+  
+  document.getElementById("button-group").disabled = false;
 });
 
 /**
