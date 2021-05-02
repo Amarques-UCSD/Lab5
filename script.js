@@ -2,8 +2,38 @@
 
 const img = new Image(); // used to load image from <input> and draw to canvas
 
-const canvas = document.getElementById("myCanvas");
+const canvas = document.getElementById("user-image");
 const context = canvas.getContext('2d');
+const btnNode = document.getElementById("button-group").childNodes;
+  
+
+var voiceSelect = document.getElementById("voice-selection");
+voiceSelect.disabled = false;
+var voices = [];
+
+window.speechSynthesis.onvoiceschanged = function() {
+  populateVoiceList();
+};
+
+if (speechSynthesis.onvoiceschanged !== undefined) {
+  speechSynthesis.onvoiceschanged = populateVoiceList;
+}
+
+function populateVoiceList() {
+  voiceSelect.remove(0);
+  voices = window.speechSynthesis.getVoices();
+  for(var i = 0; i < voices.length ; i++) {
+    var option = document.createElement('option');
+    option.textContent = voices[i].name + ' (' + voices[i].lang + ')';
+    if(voices[i].default) {
+      option.textContent += ' -- DEFAULT';
+    }
+    option.setAttribute('data-lang', voices[i].lang);
+    option.setAttribute('data-name', voices[i].name);
+    voiceSelect.appendChild(option);
+  }
+}
+
 
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
@@ -18,15 +48,17 @@ img.addEventListener('load', () => {
 });
 
 
-canvas.getElementById("image-input").addEventListener('change', function() {
+document.getElementById("image-input").addEventListener('change', function() {
 //function updateImg() {
-  alert("Uploaded");
-  img.src = URL.createObjectURL(this.files[0]);
-  img.alt = '`${img.src}`';
+  img.src  = URL.createObjectURL(this.files[0]);
+  img.alt = `${img.src}`;
+
+  btnNode[1].disabled = false;
+  btnNode[3].disabled = false;
 });
 
 
-canvas.getElementById("generate-meme").addEventListener('submit', function() {
+document.getElementById("generate-meme").addEventListener('submit', function() {
 //function generateMeme() {
   alert("Generating");
   
@@ -36,20 +68,56 @@ canvas.getElementById("generate-meme").addEventListener('submit', function() {
 
   context.fillText(`${document.getElementById("text-top").value}`, canvas.width/2, 25);
   context.fillText(`${document.getElementById("text-bottom").value}`, canvas.width/2, canvas.height - 5);
-   
-  //canvas.getElementById("button-group").disabled = false;
-  
+    
+  btnNode[1].disabled = false;
+  btnNode[3].disabled = false;
+
   alert("Done Generating");
 });
 
 
-canvas.getElementById("button-group").addEventListener('click', function() {
-//function not-sure-which-button() {
-  alert("One of the buttons");
-  // im assuming clear
+btnNode[1].addEventListener('click', function() {
+//function clear() {
+  alert("Clear Button");
   context.clearRect(0, 0, canvas.width, canvas.height);
-  canvas.getElementById("button-group").disabled = true;
+  btnNode[1].disabled = true;
+  btnNode[3].disabled = true;
 });
+
+
+btnNode[3].addEventListener('click', function() {
+  //function clear() {
+    alert("Play sound");
+
+    event.preventDefault();
+
+    var utterThis = new SpeechSynthesisUtterance(`${document.getElementById("text-top").value} ${document.getElementById("text-bottom").value}`);
+    var selectedOption = voiceSelect.selectedOptions[0].getAttribute('data-name');
+    for(var i = 0; i < voices.length ; i++) {
+      if(voices[i].name === selectedOption) {
+        utterThis.voice = voices[i];
+      }
+    }
+    utterThis.volume = myVolume;
+    window.speechSynthesis.speak(utterThis);
+  });
+  
+  var myVolume = 1.0;
+  
+  var volGroup = document.getElementById("volume-group").childNodes;
+  volGroup[3].addEventListener('change', function() {
+    if(volGroup[3].value == 0){
+      volGroup[1].src = "./icons/volume-level-0.svg";
+    } else if(volGroup[3].value >= 1 && volGroup[3].value <= 33) {
+      volGroup[1].src = "./icons/volume-level-1.svg";
+    } else if(volGroup[3].value >= 34 && volGroup[3].value <= 66) {
+      volGroup[1].src = "./icons/volume-level-2.svg";
+    } else {
+      volGroup[1].src = "./icons/volume-level-3.svg";
+    }
+    myVolume = volGroup[3].value/100.0;
+  
+  });
 
 /**
  * Takes in the dimensions of the canvas and the new image, then calculates the new
