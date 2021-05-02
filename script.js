@@ -10,7 +10,6 @@ img.addEventListener('load', () => {
   const dim = getDimmensions(canvas.width, canvas.height, img.width, img.height);
   // Some helpful tips:
   // - Fill the whole Canvas with black first to add borders on non-square images, then draw on top
-  context.clearRect(0, 0, canvas.width, canvas.height);
   context.fillRect(0, 0, canvas.width, canvas.height);
   // - Clear the form when a new image is selected
   // - If you draw the image to canvas here, it will update as soon as a new image is selected
@@ -18,7 +17,7 @@ img.addEventListener('load', () => {
 });
 
 
-document.getElementById("user-image").addEventListener('change', function() {
+canvas.getElementById("user-image").addEventListener('change', function() {
 //function updateImg() {
   alert("Uploaded");
   img.src = 'new_image.png';  // idk what is the path
@@ -26,11 +25,19 @@ document.getElementById("user-image").addEventListener('change', function() {
 });
 
 
-document.getElementById("generate-meme").addEventListener('submit', function() {
+canvas.getElementById("generate-meme").addEventListener('submit', function() {
 //function generateMeme() {
   alert("Generating");
   
-  document.getElementById("button-group").disabled = false;
+  canvas.getElementById("button-group").disabled = false;
+});
+
+
+canvas.getElementById("button-group").addEventListener('click', function() {
+//function not-sure-which-button() {
+  alert("One of the buttons");
+  // im assuming clear
+  context.clearRect(0, 0, canvas.width, canvas.height);
 });
 
 /**
