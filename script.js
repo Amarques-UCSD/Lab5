@@ -17,10 +17,10 @@ img.addEventListener('load', () => {
 });
 
 
-canvas.getElementById("user-image").addEventListener('change', function() {
+canvas.getElementById("image-input").addEventListener('change', function() {
 //function updateImg() {
   alert("Uploaded");
-  img.src = 'new_image.png';  // idk what is the path
+  img.src = document.getElementById("image-input").value;  // idk what is the path
   img.alt = '`${img.src}`';
 });
 
