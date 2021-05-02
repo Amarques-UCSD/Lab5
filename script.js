@@ -2,11 +2,11 @@
 
 const img = new Image(); // used to load image from <input> and draw to canvas
 
+const context = canvas.getContext('2d');
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
   // TODO
   alert("Loaded");
-  const context = canvas.getContext('2d');
   const dim = getDimmensions(canvas.width, canvas.height, img.width, img.height);
   // Some helpful tips:
   // - Fill the whole Canvas with black first to add borders on non-square images, then draw on top
@@ -29,6 +29,11 @@ canvas.getElementById("generate-meme").addEventListener('submit', function() {
 //function generateMeme() {
   alert("Generating");
   
+  context.font = "30px Arial";
+  context.textAlign = "center";
+  context.fillText(textTop, canvas.width/2, 20);
+  context.fillText(textBottom, canvas.width/2, canvas.height - 20);
+  
   canvas.getElementById("button-group").disabled = false;
 });
 
@@ -38,6 +43,7 @@ canvas.getElementById("button-group").addEventListener('click', function() {
   alert("One of the buttons");
   // im assuming clear
   context.clearRect(0, 0, canvas.width, canvas.height);
+  canvas.getElementById("button-group").disabled = true;
 });
 
 /**
