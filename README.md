@@ -2,6 +2,7 @@
 
 ## Author(s):
 - Alexandre Marques
+- Austin Choi
 
 ## Part 1:
 
