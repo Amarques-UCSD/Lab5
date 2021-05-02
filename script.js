@@ -2,6 +2,14 @@
 
 const img = new Image(); // used to load image from <input> and draw to canvas
 
+input.addEventListener('input', updateImg);
+
+document.getElementById("user-image").addEventListener('click', updateImg());
+function updateImg() {
+  img.src = 'new_image.png';
+  img.alt = '`${img.src}`';
+}
+
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
   // TODO
