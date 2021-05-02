@@ -52,16 +52,11 @@ document.getElementById("image-input").addEventListener('change', function() {
 //function updateImg() {
   img.src  = URL.createObjectURL(this.files[0]);
   img.alt = `${img.src}`;
-
-  btnNode[1].disabled = false;
-  btnNode[3].disabled = false;
 });
 
 
-document.getElementById("generate-meme").addEventListener('submit', function() {
+document.getElementById("generate-meme").addEventListener('submit', function(e) {
 //function generateMeme() {
-  alert("Generating");
-  
   context.font = "30px Arial";
   context.textAlign = "center";
   context.fillStyle = "white";
@@ -72,13 +67,12 @@ document.getElementById("generate-meme").addEventListener('submit', function() {
   btnNode[1].disabled = false;
   btnNode[3].disabled = false;
 
-  alert("Done Generating");
+  e.preventDefault();
 });
 
 
 btnNode[1].addEventListener('click', function() {
 //function clear() {
-  alert("Clear Button");
   context.clearRect(0, 0, canvas.width, canvas.height);
   btnNode[1].disabled = true;
   btnNode[3].disabled = true;
@@ -87,8 +81,6 @@ btnNode[1].addEventListener('click', function() {
 
 btnNode[3].addEventListener('click', function() {
   //function clear() {
-    alert("Play sound");
-
     event.preventDefault();
 
     var utterThis = new SpeechSynthesisUtterance(`${document.getElementById("text-top").value} ${document.getElementById("text-bottom").value}`);
