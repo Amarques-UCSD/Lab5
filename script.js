@@ -32,10 +32,14 @@ canvas.getElementById("generate-meme").addEventListener('submit', function() {
   
   context.font = "30px Arial";
   context.textAlign = "center";
-  context.fillText(textTop, canvas.width/2, 20);
-  context.fillText(textBottom, canvas.width/2, canvas.height - 20);
+  context.fillStyle = "white";
+
+  context.fillText(`${document.getElementById("text-top").value}`, canvas.width/2, 25);
+  context.fillText(`${document.getElementById("text-bottom").value}`, canvas.width/2, canvas.height - 5);
+   
+  //canvas.getElementById("button-group").disabled = false;
   
-  canvas.getElementById("button-group").disabled = false;
+  alert("Done Generating");
 });
 
 
