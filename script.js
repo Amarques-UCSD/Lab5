@@ -2,6 +2,7 @@
 
 const img = new Image(); // used to load image from <input> and draw to canvas
 
+const canvas = document.getElementById("myCanvas");
 const context = canvas.getContext('2d');
 // Fires whenever the img object loads a new image (such as with img.src =)
 img.addEventListener('load', () => {
